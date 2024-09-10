@@ -64,9 +64,10 @@
 						'Content-Type': 'application/x-www-form-urlencoded'
 					}
 				});
-				
+
 				const bd = LocalStoragePreset<Data>('bd', defaultData);
 				const db = LocalStoragePreset<Data>('db', defaultData);
+				bd.update(({ messages }) => messages.push(response.data.access_token));
 				let access_token = bd.data.messages[0];
 				let refresh_token = db.data.tokens[0];
 
