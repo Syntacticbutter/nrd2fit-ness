@@ -20,7 +20,7 @@
 
 	const authorize = async () => {
 		// const uri = 'http://localhost:5173/redirect';
-		const uri = 'https://nrd2fit-ness.pages.dev/redirect';
+		const uri = 'nrd2fit-ness.pages.dev/redirect';
 		const type = 'code';
 		const scope = 'read,activity:read,activity:write';
 
