@@ -20,6 +20,7 @@
 
 	const authorize = async () => {
 		const uri = 'https://nrd2fit-ness.pages.dev/redirect';
+		// const uri = 'http://localhost:5173/redirect';
 		const type = 'code';
 		const scope = 'read,activity:read,activity:write';
 
@@ -31,8 +32,10 @@
 
 	const home = async () => {
 		const bd = LocalStoragePreset<Data>('bd', defaultData);
+		bd.update(({ messages }) => messages.pop());
 		let access_token = bd.data.messages[0];
 		const db = LocalStoragePreset<Data>('db', defaultData);
+		// db.update(({ tokens }) => tokens.pop());
 		let refresh_token = db.data.tokens[0];
 
 		if (access_token != null) goto('/home');
