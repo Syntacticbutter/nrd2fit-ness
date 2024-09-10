@@ -27,7 +27,6 @@
 		if (read.get('code') != null) {
 			if (read.get('scope') == 'read,activity:write,activity:read') {
 				const authCode = read.get('code')!;
-				console.log(authCode);
 				const grant = 'authorization_code';
 
 				const payload =
@@ -60,26 +59,24 @@
 				const payload =
 					au + `?client_id=${cl}&client_secret=${sc}&code=${authCode}&grant_type=${grant}`;
 
-				const bd = LocalStoragePreset<Data>('bd', defaultData);
-				const db = LocalStoragePreset<Data>('db', defaultData);
-
 				const response = await axios.post(payload, {
 					headers: {
 						'Content-Type': 'application/x-www-form-urlencoded'
 					}
 				});
-
-				bd.update(({ messages }) => messages.pop());
-				bd.update(({ messages }) => messages.push(response.data.access_token));
+				
+				const bd = LocalStoragePreset<Data>('bd', defaultData);
+				const db = LocalStoragePreset<Data>('db', defaultData);
 				let access_token = bd.data.messages[0];
-
-				db.update(({ tokens }) => tokens.pop());
+				let refresh_token = db.data.tokens[0];
 
 				let deauth = `https://www.strava.com/oauth/deauthorize?access_token=${access_token}`;
 				const revoke = await axios.post(deauth);
 
 				bd.update(({ messages }) => messages.pop());
 				access_token = bd.data.messages[0];
+				db.update(({ tokens }) => tokens.pop());
+				refresh_token = db.data.tokens[0];
 
 				goto('/');
 			}

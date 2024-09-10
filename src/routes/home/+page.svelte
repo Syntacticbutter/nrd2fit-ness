@@ -44,7 +44,6 @@
 
 	const getClub = async () => {
 		const bd = LocalStoragePreset<Data>('bd', defaultData);
-		// bd.update(({ messages }) => messages.pop());
 		let access_token = bd.data.messages[0];
 
 		if (access_token == null) goto('/');
@@ -134,13 +133,17 @@
 
 	const deauthorize = async () => {
 		const bd = LocalStoragePreset<Data>('bd', defaultData);
+		const db = LocalStoragePreset<Data>('db', defaultData);
 		let access_token = bd.data.messages[0];
+		let refresh_token = db.data.tokens[0];
 
 		let deauth = `https://www.strava.com/oauth/deauthorize?access_token=${access_token}`;
 		const revoke = await axios.post(deauth);
 
 		bd.update(({ messages }) => messages.pop());
 		access_token = bd.data.messages[0];
+		db.update(({ tokens }) => tokens.pop());
+		refresh_token = db.data.tokens[0];
 
 		goto('/');
 	};

@@ -29,7 +29,6 @@
 
 	const clubAct = async () => {
 		const bd = LocalStoragePreset<Data>('bd', defaultData);
-		// bd.update(({ messages }) => messages.pop());
 		let access_token = bd.data.messages[0];
 
 		if (access_token == null) goto('/');

@@ -71,7 +71,6 @@
 
 	const getUser = async () => {
 		const bd = LocalStoragePreset<Data>('bd', defaultData);
-		// bd.update(({ messages }) => messages.pop());
 		let access_token = bd.data.messages[0];
 
 		if (access_token == null) goto('/');
@@ -157,7 +156,6 @@
 					'Content-Type': 'application/x-www-form-urlencoded'
 				}
 			});
-			// console.log(response.data);
 			bd.update(({ messages }) => messages.pop());
 			bd.update(({ messages }) => messages.push(response.data.access_token));
 			access_token = bd.data.messages[0];

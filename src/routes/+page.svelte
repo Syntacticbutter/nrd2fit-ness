@@ -10,7 +10,6 @@
 	import Activities from '$lib/components/activities.svelte';
 	import Summary from '$lib/components/summary.svelte';
 	import { goto } from '$app/navigation';
-	import axios from 'axios';
 
 	type Data = {
 		tokens: string[];
@@ -33,8 +32,8 @@
 	const home = async () => {
 		const bd = LocalStoragePreset<Data>('bd', defaultData);
 		let access_token = bd.data.messages[0];
-
 		const db = LocalStoragePreset<Data>('db', defaultData);
+		let refresh_token = db.data.tokens[0];
 
 		if (access_token != null) goto('/home');
 	};
@@ -42,19 +41,6 @@
 	onMount(() => {
 		home();
 	});
-
-	const deauthorize = async () => {
-		const bd = LocalStoragePreset<Data>('bd', defaultData);
-		let access_token = bd.data.messages[0];
-
-		let deauth = `https://www.strava.com/oauth/deauthorize?access_token=${access_token}`;
-		const revoke = await axios.post(deauth);
-
-		bd.update(({ messages }) => messages.pop());
-		access_token = bd.data.messages[0];
-
-		goto('/');
-	};
 </script>
 
 <Nav />
@@ -91,13 +77,6 @@
 									/></svg
 								>
 							</button>
-							<!-- <button
-								on:click={deauthorize}
-								class="inline-flex items-center justify-end align-middle rounded-md bg-[#fc4c02] bg-opacity-10 padding px-3 py-0 text-[#fc4c02]
-						 active:text-white active:bg-[#fc4c02] text-xs font-bold h-8"
-							>
-								Logout
-							</button> -->
 						</div>
 					</div>
 				</div>
