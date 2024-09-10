@@ -33,10 +33,8 @@
 	const home = async () => {
 		const bd = LocalStoragePreset<Data>('bd', defaultData);
 		let access_token = bd.data.messages[0];
-		console.log(bd.data.messages);
 
 		const db = LocalStoragePreset<Data>('db', defaultData);
-		console.log(db.data.tokens);
 
 		if (access_token != null) goto('/home');
 	};

@@ -22,8 +22,6 @@
 
 	$: au = data.props.authUrl;
 	const scope = async () => {
-		// http://localhost:5173/redirect?state=&code=a225d345e12b6f65bfbaf4ff6923a9c0bffc2ce0&scope=read,activity:write,activity:read
-
 		const query = window.location.search;
 		const read = new URLSearchParams(query);
 		if (read.get('code') != null) {
@@ -38,16 +36,11 @@
 				const bd = LocalStoragePreset<Data>('bd', defaultData);
 				const db = LocalStoragePreset<Data>('db', defaultData);
 				try {
-					console.log(payload);
-
 					const response = await axios.post(payload, {
 						headers: {
 							'Content-Type': 'application/x-www-form-urlencoded'
 						}
 					});
-
-					console.log(response.data);
-
 					bd.update(({ messages }) => messages.pop());
 					bd.update(({ messages }) => messages.push(response.data.access_token));
 					let access_token = bd.data.messages[0];
@@ -56,16 +49,12 @@
 					db.update(({ tokens }) => tokens.push(response.data.refresh_token));
 					let refresh_token = db.data.tokens[0];
 
-					console.log('New Access Token:', access_token);
-					console.log(refresh_token);
-
 					goto('/home');
 				} catch (error: any) {
 					console.log(error);
 				}
 			} else {
 				const authCode = read.get('code')!;
-				console.log(authCode);
 				const grant = 'authorization_code';
 
 				const payload =
@@ -73,8 +62,6 @@
 
 				const bd = LocalStoragePreset<Data>('bd', defaultData);
 				const db = LocalStoragePreset<Data>('db', defaultData);
-
-				console.log(payload);
 
 				const response = await axios.post(payload, {
 					headers: {

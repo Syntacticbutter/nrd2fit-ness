@@ -51,7 +51,6 @@
 				}
 			});
 			items = call.data;
-
 			console.log('tried');
 		} catch (error: any) {
 			const response = await axios.post(base, data.toString(), {
@@ -74,7 +73,6 @@
 				}
 			});
 			items = call.data;
-
 			console.log('caught');
 		}
 	};

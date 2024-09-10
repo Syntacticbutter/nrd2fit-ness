@@ -86,7 +86,7 @@
 				}
 			});
 			members = get.data;
-			console.log('tried -- first attempt');
+			console.log('tried');
 		} catch (error: any) {
 			hasRun = true;
 			const response = await axios.post(base, data.toString(), {
@@ -94,16 +94,13 @@
 					'Content-Type': 'application/x-www-form-urlencoded'
 				}
 			});
-			// console.log(response.data);
 			bd.update(({ messages }) => messages.pop());
 			bd.update(({ messages }) => messages.push(response.data.access_token));
 			access_token = bd.data.messages[0];
-			// console.log('Access Token: ' + access_token);
 
 			db.update(({ tokens }) => tokens.pop());
 			db.update(({ tokens }) => tokens.push(response.data.refresh_token));
 			refresh_token = db.data.tokens[0];
-			// console.log('Current Refresh Token: ' + refresh_token);
 
 			// Club Overview
 			let club = `https://www.strava.com/api/v3/clubs/${club_id}`;

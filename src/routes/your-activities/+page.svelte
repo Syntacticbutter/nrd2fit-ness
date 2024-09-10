@@ -52,7 +52,6 @@
 				}
 			});
 			items = call.data;
-			console.log(items);
 
 			console.log('tried', hasRun);
 		} catch (error: any) {

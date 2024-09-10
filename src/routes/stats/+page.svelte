@@ -100,7 +100,6 @@
 			profile_pic = call.data.profile;
 
 			items = call.data;
-			console.log(items);
 
 			// Athlete stats
 			let stats = `https://www.strava.com/api/v3/athletes/${id}/stats`;
@@ -110,9 +109,8 @@
 				}
 			});
 			statistics = read.data;
-			console.log(statistics);
 
-			// LOOK AT ALL THESE VARIABLEES
+			// LOOK AT ALL THESE VARIABLES
 			a_ride = read.data.all_ride_totals.count;
 			a_run = read.data.all_run_totals.count;
 			a_swim = read.data.all_swim_totals.count;
