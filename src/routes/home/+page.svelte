@@ -141,8 +141,8 @@
 		const revoke = await axios.post(deauth);
 
 		bd.update(({ messages }) => messages.pop());
-		access_token = bd.data.messages[0];
 		db.update(({ tokens }) => tokens.pop());
+		access_token = bd.data.messages[0];
 		refresh_token = db.data.tokens[0];
 
 		goto('/');
